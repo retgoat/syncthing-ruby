@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Roman Sotnikov"]
   spec.email         = ["roman.sotnikov@gmail.com"]
   spec.summary       = %q{Syncthing REST API bundings.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.description   = %q{Gem to access syncthing REST API in ruby and ruby on rails applications.}
+  spec.homepage      = "https://github.com/retgoat/syncthing-ruby"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

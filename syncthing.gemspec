@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Syncthing::VERSION
   spec.authors       = ["Roman Sotnikov"]
   spec.email         = ["roman.sotnikov@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{Syncthing REST API bundings.}
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"

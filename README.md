@@ -1,6 +1,6 @@
 # Syncthing
 
-TODO: Write a gem description
+Provides bindings for Syncthing REST API 
 
 ## Installation
 
@@ -18,7 +18,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Make a new instance of SyncthingClinet with API key and url
+
+```ruby
+        sc = SyncthingClient.new('APIKEY', 'URL')
+        =>#<SyncthingClient:0x007f8310183108 @syncthing_url="http://localhost:8080/rest", @syncthing_apikey="BO6406JTI3NH879QRHOGU840PL8702">
+
+        sc.get_version
+        #=> "v0.8.21" 
+```
 
 ## Contributing
 

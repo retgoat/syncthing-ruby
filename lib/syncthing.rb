@@ -115,8 +115,12 @@ class SyncthingClient
 
     request = Net::HTTP.new(url.host, url.port)
 
+
     request.read_timeout = 30
-    request.use_ssl = @syncthing_url.match(/https/) ? true : false
+    usessl = @syncthing_url.match('https')
+    request.use_ssl = usessl
+    request.verify_mode = OpenSSL::SSL::VERIFY_NONE if usessl
+
     # make the call
     response = request.start {|http| http.request(call) }
 

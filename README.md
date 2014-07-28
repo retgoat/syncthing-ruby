@@ -100,3 +100,7 @@ Make a new instance of SyncthingClinet with API key and url — let's shake!
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+##License
+All code is licensed under the [MIT License.](https://github.com/retgoat/syncthing-ruby/blob/master/LICENSE.txt)
+

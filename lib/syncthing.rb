@@ -71,7 +71,7 @@ class SyncthingClient
     api_call(ENDPOINTS[:errors][:new], {:error => error_body.to_str}, false)
   end
 
-  def clear_error
+  def clear_errors
     api_call(ENDPOINTS[:errors][:clear], false, false)
   end
 
@@ -109,7 +109,6 @@ class SyncthingClient
 
     if request_body && !endpoint == ENDPOINTS[:config][:new]
       call.set_form_data(request_body)
-      p call.inspect
     else
       call.body = request_body.to_json
     end
@@ -121,12 +120,10 @@ class SyncthingClient
     # make the call
     response = request.start {|http| http.request(call) }
 
-    if endpoint = ENDPOINTS[:version]
-      response.body.to_str unless response.body == nil
-    else
-      JSON.parse(response.body) unless response.body == nil
+    unless response.body == nil or response.body == ""
+      endpoint == ENDPOINTS[:version] ? response.body.to_str :  JSON.parse(response.body)
     end
-    response.body
+    
   end#api_call
 
 end#module

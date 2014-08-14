@@ -33,14 +33,14 @@ class SyncthingClient
   def initialize (apikey, url)
     @syncthing_url = "#{url}/rest"
     @syncthing_apikey = apikey
-  end#initialize
+  end # initialize
 
   def get_version
     api_call(ENDPOINTS[:version])
   end
 
-  def get_repo repository=false
-    api_call(ENDPOINTS[:repo], repository ? {:repo=>repository.to_s} : false, false)
+  def get_repo repository = false
+    api_call(ENDPOINTS[:repo], repository ? { repo: repository.to_s } : false, false)
   end
 
   def get_connections
@@ -68,7 +68,7 @@ class SyncthingClient
   end
 
   def new_error error_body
-    api_call(ENDPOINTS[:errors][:new], {:error => error_body.to_str}, false)
+    api_call(ENDPOINTS[:errors][:new], { error: error_body.to_str }, false)
   end
 
   def clear_errors
@@ -76,7 +76,7 @@ class SyncthingClient
   end
 
   def new_discovery_hint(node, addr)
-    api_call(ENDPOINTS[:discovery][:new], {:node=>node, :addr=>addr}, false)
+    api_call(ENDPOINTS[:discovery][:new], { node: node, addr: addr }, false)
   end
 
   def new_config config
@@ -115,7 +115,6 @@ class SyncthingClient
 
     request = Net::HTTP.new(url.host, url.port)
 
-
     request.read_timeout = 30
     usessl = @syncthing_url.match('https')
     request.use_ssl = usessl
@@ -126,8 +125,7 @@ class SyncthingClient
 
     unless response.body == nil or response.body == ""
       endpoint == ENDPOINTS[:version] ? response.body.to_str :  JSON.parse(response.body)
-    end
-    
-  end#api_call
+    end # unless
+  end # api_call
 
-end#module
+end # module

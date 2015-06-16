@@ -1,8 +1,10 @@
+*DOCS AREN'T UPDATED YET*
+
 [![Build Status](https://travis-ci.org/retgoat/syncthing-ruby.svg?branch=master)](https://travis-ci.org/retgoat/syncthing-ruby)
 
 # Syncthing REST API bindings for Ruby
 
-This gem provides bindings for [Syncthing](http://syncthing.net/) [REST API](https://discourse.syncthing.net/t/v0-8-14-api-keys/335/)
+This gem provides bindings for [Syncthing](http://syncthing.net/) [REST API](http://docs.syncthing.net/dev/rest.html)
 
 ## Installation
 

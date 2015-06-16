@@ -11,8 +11,8 @@ class SyncthingClient
     :connections => { :name=>'/system/connections', :method => :get },
     :config => {
       :get => { :name=>'/system/config', :method => :get },
-      :insync => { :name => '/system/config/insync', :method => :get },
-      :new => { :name => '/system/config', :method => :post }
+      :new => { :name => '/system/config', :method => :post },
+      :insync => { :name => '/system/config/insync', :method => :get }
     },
     :system => {
       :restart => { :name => '/system/restart', :method => :post },
@@ -131,43 +131,39 @@ class SyncthingClient
 
   # Database
   def browse_databse folder, level = false
-    params_string = "?folder=#{folder}"
-    params_string << "&level=#{level}" if level
-    api_call(ENDPOINTS[:db][:browse], false, params_string)
+    api_call(ENDPOINTS[:db][:browse], false, get_params_string({ folder: folder, level: level} ))
   end
 
   def get_completion device_id, folder
-    api_call(ENDPOINTS[:db][:completion], false, "?device=#{device_id}&folder=#{folder}")
+    api_call(ENDPOINTS[:db][:completion], false, get_params_string({ device: device_id, folder: folder }))
   end
 
   def get_file file
-    api_call(ENDPOINTS[:db][:file], false, "?file=#{file}")
+    api_call(ENDPOINTS[:db][:file], false, get_params_string({ file: file }))
   end
 
   def get_ignores folder
-    api_call(ENDPOINTS[:db][:ignores], false, "?folder=#{folder}")
+    api_call(ENDPOINTS[:db][:ignores], false, get_params_string({ folder: folder }))
   end
 
   def new_ignores folder, ignores
-    api_call(ENDPOINTS[:db][:new_ignores], ignores, "?folder=#{folder}")
+    api_call(ENDPOINTS[:db][:new_ignores], ignores, get_params_string({ folder: folder }))
   end
 
   def get_need folder
-    api_call(ENDPOINTS[:db][:need], false, "?folder=#{folder}")
+    api_call(ENDPOINTS[:db][:need], false, get_params_string({ folder: folder }))
   end
 
   def assign_priority folder, file
-    api_call(ENDPOINTS[:db][:prio], false, "?folder=#{folder}&file=#{file}")
+    api_call(ENDPOINTS[:db][:prio], false, get_params_string({ folder: folder, file: file }))
   end
 
-  def scan folder, subfilder = false
-    params_string = "?folder=#{folder}"
-    params_string << "&sub=#{subfilder}" if subfilder
-    api_call(ENDPOINTS[:db][:scan], false, params_string)
+  def scan folder, subfolder = false
+    api_call(ENDPOINTS[:db][:scan], false, get_params_string({ folder: folder, sub: subfolder }))
   end
 
   def get_folder_status folder
-    api_call(ENDPOINTS[:db][:status], false, "?folder=#{folder}")
+    api_call(ENDPOINTS[:db][:status], false, get_params_string({ folder: folder }))
   end
 
   # Stats
@@ -181,26 +177,53 @@ class SyncthingClient
 
   private
 
-  def api_call(endpoint, request_body = false, params = false)
+  def get_params_string(params_hash)
+    str = "?"
+    params_hash.each{ |k,v| str << "&#{k}=#{v}" if v}
+    str
+  end
+
+  def parse_url(endpoint, params = false)
     url_string = @syncthing_url + endpoint[:name]
     url_string << params if params
 
-    url = URI.parse(url_string)
+    uri = URI.parse(url_string)
+  end
+
+  def parse_api_response(response)
+    if response.code.to_i == 200
+      if response.body.nil? || response.body.blank?
+        { code: response.code.to_i, message: "Completed successfully"}
+      else
+        JSON.parse(response.body)
+      end
+    else
+      raise SyncthingApiError.new("#{response.code} #{response.body.to_s}")
+    end
+  end
+
+  def get_initheader
+    {
+      'Content-Type' =>'application/json',
+      'User-Agent' => 'Syncthing Ruby client',
+      'X-API-Key'=>@syncthing_apikey
+    }
+  end
+
+  def api_call(endpoint, request_body = false, params = false)
+    url = parse_url(endpoint, params)
+
     # construct the call data
     call = case endpoint[:method]
     when :post
-      Net::HTTP::Post.new(url.request_uri, initheader = {'Content-Type' =>'application/json', 'User-Agent' => 'Syncthing Ruby client', 'X-API-Key'=>@syncthing_apikey})
+      Net::HTTP::Post.new(url.request_uri, get_initheader)
     when :get
-      Net::HTTP::Get.new(url.request_uri, initheader = {'Content-Type' =>'application/json', 'User-Agent' => 'Syncthing Ruby client', 'X-API-Key'=>@syncthing_apikey})
+      Net::HTTP::Get.new(url.request_uri, get_initheader)
     else
       throw "Unknown call method #{endpoint[:method]}"
     end
 
-    if request_body && !endpoint == ENDPOINTS[:config][:new]
-      call.set_form_data(request_body)
-    else
-      call.body = request_body.to_json
-    end
+    call.body = request_body.to_json
 
     request = Net::HTTP.new(url.host, url.port)
 
@@ -211,15 +234,9 @@ class SyncthingClient
 
     # make the call
     response = request.start {|http| http.request(call) }
-    if response.code.to_i == 200
-      if response.body.nil? || response.body.blank?
-        { code: response.code.to_i, message: "Completed successfully"}
-      else
-        JSON.parse(response.body)
-      end
-    else
-      raise SyncthingApiError.new("#{response.code} #{response.body.to_s}")
-    end
+
+    parse_api_response(response)
+
   end # api_call
 
 end # module

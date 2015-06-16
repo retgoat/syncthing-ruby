@@ -210,11 +210,8 @@ class SyncthingClient
     }
   end
 
-  def api_call(endpoint, request_body = false, params = false)
-    url = parse_url(endpoint, params)
-
-    # construct the call data
-    call = case endpoint[:method]
+  def get_call(endpoint, url)
+    case endpoint[:method]
     when :post
       Net::HTTP::Post.new(url.request_uri, get_initheader)
     when :get
@@ -222,6 +219,13 @@ class SyncthingClient
     else
       throw "Unknown call method #{endpoint[:method]}"
     end
+  end
+
+  def api_call(endpoint, request_body = false, params = false)
+    url = parse_url(endpoint, params)
+
+    # construct the call data
+    call = get_call(endpoint, url)
 
     call.body = request_body.to_json
 

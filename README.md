@@ -1,6 +1,8 @@
 *DOCS AREN'T UPDATED YET*
 
 [![Build Status](https://travis-ci.org/retgoat/syncthing-ruby.svg?branch=master)](https://travis-ci.org/retgoat/syncthing-ruby)
+[![Code Climate](https://codeclimate.com/github/retgoat/syncthing-ruby/badges/gpa.svg)](https://codeclimate.com/github/retgoat/syncthing-ruby)
+[![Test Coverage](https://codeclimate.com/github/retgoat/syncthing-ruby/badges/coverage.svg)](https://codeclimate.com/github/retgoat/syncthing-ruby/coverage)
 
 # Syncthing REST API bindings for Ruby
 

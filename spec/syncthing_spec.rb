@@ -78,12 +78,12 @@ describe SyncthingClient do
   end
 
   it 'should get errors' do
-    stub_request(:get, "http://testurl.com/rest/system/errors").
+    stub_request(:get, "http://testurl.com/rest/system/error").
          with(:body => "false",
               :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Syncthing Ruby client', 'X-Api-Key'=>'QWERTYUIOP'}).
          to_return(:status => 200, :body => "", :headers => {})
     @syncthing.get_errors
-    expect(WebMock).to have_requested(:get, "#{@syncthing.instance_variable_get(:@syncthing_url)}/system/errors")
+    expect(WebMock).to have_requested(:get, "#{@syncthing.instance_variable_get(:@syncthing_url)}/system/error")
   end
 
   it 'should clear errors' do
@@ -95,14 +95,14 @@ describe SyncthingClient do
     expect(WebMock).to have_requested(:post, "#{@syncthing.instance_variable_get(:@syncthing_url)}/system/error/clear")
   end
 
-  it 'should create a new discovery hint' do
-    stub_request(:post, "http://testurl.com/rest/system/discovery/hint").
-         with(:body => "{\"node\":\"P56IOI7MZJNU2IQGDREYDM2MGTMGL3BXNPQ6W5BTBBZ4TJXZWICQ\",\"addr\":\"10.12.13.14:22000\"}",
-              :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Syncthing Ruby client', 'X-Api-Key'=>'QWERTYUIOP'}).
-         to_return(:status => 200, :body => "", :headers => {})
-    @syncthing.new_discovery_hint('P56IOI7MZJNU2IQGDREYDM2MGTMGL3BXNPQ6W5BTBBZ4TJXZWICQ', '10.12.13.14:22000')
-    expect(WebMock).to have_requested(:post, "#{@syncthing.instance_variable_get(:@syncthing_url)}/system/discovery/hint")
-  end
+  # it 'should create a new discovery hint' do
+  #   stub_request(:post, "http://testurl.com/rest/system/discovery/hint").
+  #        with(:body => "{\"node\":\"P56IOI7MZJNU2IQGDREYDM2MGTMGL3BXNPQ6W5BTBBZ4TJXZWICQ\",\"addr\":\"10.12.13.14:22000\"}",
+  #             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Syncthing Ruby client', 'X-Api-Key'=>'QWERTYUIOP'}).
+  #        to_return(:status => 200, :body => "", :headers => {})
+  #   @syncthing.new_discovery_hint('P56IOI7MZJNU2IQGDREYDM2MGTMGL3BXNPQ6W5BTBBZ4TJXZWICQ', '10.12.13.14:22000')
+  #   expect(WebMock).to have_requested(:post, "#{@syncthing.instance_variable_get(:@syncthing_url)}/system/discovery/hint")
+  # end
 
   it 'should load a new config' do
     new_config = {"a"=>1, "b"=>2}

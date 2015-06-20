@@ -24,7 +24,7 @@ class SyncthingClient
       :status => { :name => '/system/status', :method => :get },
     },
     :errors => {
-      :get => { :name => '/system/errors', :method => :get },
+      :get => { :name => '/system/error', :method => :get },
       :new => { :name => '/system/error', :method => :post },
       :clear => { :name => '/system/error/clear', :method => :post }
     },
@@ -48,7 +48,14 @@ class SyncthingClient
     :stats => {
       :device => { :name => '/stats/device', :method => :get },
       :folder => { :name => '/stats/folder', :method => :get }
-    }
+    },
+    # Mics endpoints
+    :svc => {
+      :device => { :name => '/svc/device', :method => :get },
+      :lang => { :name => '/svc/lang', :method => :get },
+      :support => { :name => '/svc/support', :method => :get }
+    },
+
   }
 
   def initialize (apikey, url = 'https://localhost:8080')
@@ -89,9 +96,9 @@ class SyncthingClient
     api_call(ENDPOINTS[:errors][:clear])
   end
 
-  def new_discovery_hint(node, addr)
-    api_call(ENDPOINTS[:discovery][:new], { node: node, addr: addr }, false)
-  end
+  # def new_discovery_hint node, addr
+  #   api_call(ENDPOINTS[:discovery][:new], false, get_params_string({ device: node, addr: addr }))
+  # end
 
   def new_config config
     api_call(ENDPOINTS[:config][:new], config, false)
@@ -130,8 +137,8 @@ class SyncthingClient
   end
 
   # Database
-  def browse_databse folder, level = false
-    api_call(ENDPOINTS[:db][:browse], false, get_params_string({ folder: folder, level: level} ))
+  def browse_databse folder, level = false, prefix = false
+    api_call(ENDPOINTS[:db][:browse], false, get_params_string({ folder: folder, level: level, prefix: prefix} ))
   end
 
   def get_completion device_id, folder
@@ -175,6 +182,21 @@ class SyncthingClient
     api_call(ENDPOINTS[:stats][:folder])
   end
 
+  # Mics
+  # These methods are not implemented yet
+  # def get_device_id device_id
+  #   api_call(ENDPOINTS[:svc][:device], false, get_params_string({ id: device_id }))
+  # end
+
+  # def get_lang
+  #   api_call(ENDPOINTS[:svc][:lang])
+  # end
+
+  # def get_support
+  #   api_call(ENDPOINTS[:svc][:support])
+  # end
+
+
   private
 
   def get_params_string(params_hash)
@@ -186,7 +208,6 @@ class SyncthingClient
   def parse_url(endpoint, params = false)
     url_string = @syncthing_url + endpoint[:name]
     url_string << params if params
-
     uri = URI.parse(url_string)
   end
 

@@ -48,14 +48,7 @@ class SyncthingClient
     :stats => {
       :device => { :name => '/stats/device', :method => :get },
       :folder => { :name => '/stats/folder', :method => :get }
-    },
-    # Mics endpoints
-    :svc => {
-      :device => { :name => '/svc/device', :method => :get },
-      :lang => { :name => '/svc/lang', :method => :get },
-      :support => { :name => '/svc/support', :method => :get }
-    },
-
+    }
   }
 
   def initialize (apikey, url = 'https://localhost:8080')
@@ -181,21 +174,6 @@ class SyncthingClient
   def get_folder_statistics
     api_call(ENDPOINTS[:stats][:folder])
   end
-
-  # Mics
-  # These methods are not implemented yet
-  # def get_device_id device_id
-  #   api_call(ENDPOINTS[:svc][:device], false, get_params_string({ id: device_id }))
-  # end
-
-  # def get_lang
-  #   api_call(ENDPOINTS[:svc][:lang])
-  # end
-
-  # def get_support
-  #   api_call(ENDPOINTS[:svc][:support])
-  # end
-
 
   private
 

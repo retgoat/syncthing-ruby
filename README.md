@@ -102,6 +102,7 @@ Raises a new error with given message. Returns code 200 on success.
 sc.new_error('foo')
 => {:code=>200, :message=>"Completed successfully"}
 ```
+![new error](https://leto13d.storage.yandex.net/rdisk/b0dfe024b3269274bc9014792ea8b8dd5e7575a229245b84e6019ee80a10bfd3/inf/VT0lxXp2zvqfqmTRIZOawcv2242sg4XBbgU2lpKTTICiRIUvWYirVtp1ubqrwuMqnux7QLTp64Li6D2X5Rmgkw==?uid=0&filename=sc_error.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&tknv=v2&rtoken=933fab720b2d979c1b1b83e24ef097aa&force_default=no)
 
 ###clear_errors
 

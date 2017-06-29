@@ -40,7 +40,7 @@ Make a new instance of SyncthingClinet with API key and url — let's shake!
 2.1.2 :001 > sc = SyncthingClient.new('BO6406JTI3NH879QRHOGU840PL8702')
 => #<SyncthingClient:0x007ffb1f1102c0 @syncthing_url="https://localhost:8080/rest", @syncthing_apikey="BO6406JTI3NH879QRHOGU840PL8702"> 
 ```
-###get_version
+### get_version
 
 returns current version
 
@@ -49,7 +49,7 @@ returns current version
 => {"arch"=>"amd64", "longVersion"=>"syncthing v0.11.9 (go1.4.2 darwin-amd64 default) unknown-user@syncthing-builder 2015-06-14 11:52:00 UTC", "os"=>"darwin", "version"=>"v0.11.9"} 
 ```
 
-###get_connections
+### get_connections
 
 Returns current connections
 
@@ -58,7 +58,7 @@ Returns current connections
 => {"connections"=>{}, "total"=>{"address"=>"", "at"=>"2015-06-20T09:15:35.066466715+06:00", "clientVersion"=>"", "inBytesTotal"=>0, "outBytesTotal"=>0}} 
 ```
 
-###get_config
+### get_config
 
 Returns current syncthing config
 
@@ -67,7 +67,7 @@ Returns current syncthing config
 => {"version"=>10, "folders"=>[{"id"=>"123", "path"=>"/Users/retgoat/workspace/tapp", "devices"=>[{"deviceID"=>"7OFMTQD-Q64DFR3-37DAZ4O-LFETQAM-FGIH46F-XGGXHFQ-EYLKOZR-HHLDUQT"}], "readOnly"=>true, "rescanIntervalS"=>60, "ignorePerms"=>false, "autoNormalize"=>true, "versioning"=>{"type"=>"simple", "params"=>{"keep"=>"5"}}, "copiers"=>1, "pullers"=>16, "hashers"=>0, "order"=>"smallestFirst", "invalid"=>""}], "devices"=>[{"deviceID"=>"7OFMTQD-Q64DFR3-37DAZ4O-LFETQAM-FGIH46F-XGGXHFQ-EYLKOZR-HHLDUQT", "name"=>"iMac-Roman.local", "addresses"=>["dynamic"], "compression"=>"metadata", "certName"=>"", "introducer"=>false}], "gui"=>{"enabled"=>true, "address"=>"127.0.0.1:8080", "user"=>"", "password"=>"", "useTLS"=>true, "apiKey"=>"BO6406JTI3NH879QRHOGU840PL8702"}, "options"=>{"listenAddress"=>["0.0.0.0:22000"], "globalAnnounceServers"=>["udp4://announce.syncthing.net:22025"], "globalAnnounceEnabled"=>true, "localAnnounceEnabled"=>true, "localAnnouncePort"=>21025, "localAnnounceMCAddr"=>"[ff32::5222]:21026", "maxSendKbps"=>0, "maxRecvKbps"=>0, "reconnectionIntervalS"=>60, "startBrowser"=>true, "upnpEnabled"=>true, "upnpLeaseMinutes"=>60, "upnpRenewalMinutes"=>30, "upnpTimeoutSeconds"=>10, "urAccepted"=>1, "urUniqueId"=>"Dr9WJK-1", "restartOnWakeup"=>true, "autoUpgradeIntervalH"=>12, "keepTemporariesH"=>24, "cacheIgnoredFiles"=>true, "progressUpdateIntervalS"=>5, "symlinksEnabled"=>true, "limitBandwidthInLan"=>false, "databaseBlockCacheMiB"=>0}, "ignoredDevices"=>[]} 
 ```
 
-###get_insync
+### get_insync
 
 Returns current insync condition
 
@@ -76,7 +76,7 @@ Returns current insync condition
 => {"configInSync"=>true}
 ```
 
-###get_errors
+### get_errors
 
 Returns raised and not cleared errors
 
@@ -85,7 +85,7 @@ sc.get_errors
 => {"errors"=>[]} 
 ```
 
-###get_discovery
+### get_discovery
 
 Returns local discovery hash
 
@@ -94,7 +94,7 @@ Returns local discovery hash
 => {} 
 ```
 
-###new_error
+### new_error
 
 Raises a new error with given message. Returns code 200 on success.
 
@@ -104,7 +104,7 @@ sc.new_error('foo')
 ```
 ![new error](https://leto13d.storage.yandex.net/rdisk/b0dfe024b3269274bc9014792ea8b8dd5e7575a229245b84e6019ee80a10bfd3/inf/VT0lxXp2zvqfqmTRIZOawcv2242sg4XBbgU2lpKTTICiRIUvWYirVtp1ubqrwuMqnux7QLTp64Li6D2X5Rmgkw==?uid=0&filename=sc_error.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&tknv=v2&rtoken=933fab720b2d979c1b1b83e24ef097aa&force_default=no)
 
-###clear_errors
+### clear_errors
 
 Clears previously rised errors. Returns code 200 on success.
 
@@ -113,7 +113,7 @@ Clears previously rised errors. Returns code 200 on success.
 => {:code=>200, :message=>"Completed successfully"}
 ```
 
-###new_config
+### new_config
 
 Uploads a new config to syncthing server.
 
@@ -131,7 +131,7 @@ cfg = {"version"=>10, "folders"=>[{"id"=>"123", "path"=>"/Users/retgoat/workspac
 => {:code=>200, :message=>"Completed successfully"} 
 ```
 
-###restart!
+### restart!
 
 Will restart syncthing server
 
@@ -139,7 +139,7 @@ Will restart syncthing server
 2.1.2 :002 > sc.restart! => {"ok"=>"restarting"}
 ```
 
-###reset!
+### reset!
 This means renaming all repository directories to temporary, unique names, wiping all indexes and restarting. 
 
 This should probably not be used during normal operations...
@@ -149,14 +149,14 @@ sc.reset!
 => {"ok"=>"resetting database"}
 ```
 
-###shutdown!
+### shutdown!
 
 ```ruby
 sc.shutdown!
 => {"ok"=>"shutting down"}
 ```
 
-###upgrade
+### upgrade
 
 Check for the new veersion
 
@@ -165,7 +165,7 @@ Check for the new veersion
  => {"latest"=>"v0.11.9", "majorNewer"=>false, "newer"=>false, "running"=>"v0.11.9"}
 ```
 
-###upgrade!
+### upgrade!
 
 Perform an upgrade and restart if new version exists. Does nothing if current version is latest.
 
@@ -174,7 +174,7 @@ Perform an upgrade and restart if new version exists. Does nothing if current ve
  => {:code=>200, :message=>"Completed successfully"} 
 ```
 
-###get_status
+### get_status
 
 Returns current status
 
@@ -183,7 +183,7 @@ Returns current status
 => {"alloc"=>7061984, "cpuPercent"=>0.07942980406638137, "extAnnounceOK"=>{"udp4://announce.syncthing.net:22025"=>false}, "goroutines"=>58, "myID"=>"7OFMTQD-Q64DFR3-37DAZ4O-LFETQAM-FGIH46F-XGGXHFQ-EYLKOZR-HHLDUQT", "pathSeparator"=>"/", "sys"=>22104312, "tilde"=>"/Users/retgoat", "uptime"=>198} 
 ```
 
-###get_ping
+### get_ping
 
 Returns a `{"ping":"pong"}` object
 
@@ -192,11 +192,11 @@ Returns a `{"ping":"pong"}` object
 => {"ping"=>"pong"} 
 ```
 
-###new_ping
+### new_ping
 
 Doing exactly the same as `get_ping` but API key is required (for `get_ping` it isn't). However, SyncthingClient is always using it. So, there is no difference between these two methods.
 
-###browse_database
+### browse_database
 
 **Parameters**
 
@@ -219,7 +219,7 @@ Returns files in given folder
 => {".keep"=>["2014-04-29T15:40:52+07:00", 0]} 
 ```
 
-###get_completion
+### get_completion
 
 Returns completion in persentage (0-100) for given device and folder
 
@@ -235,7 +235,7 @@ Returns completion in persentage (0-100) for given device and folder
 => {"completion"=>0} 
 ```
 
-###get_file
+### get_file
 
 Returns info for given file
 
@@ -251,7 +251,7 @@ Returns info for given file
 => {"availability"=>nil, "global"=>{"flags"=>"0", "localVersion"=>0, "modified"=>"1970-01-01T07:00:00+07:00", "name"=>"", "numBlocks"=>0, "size"=>0, "version"=>[]}, "local"=>{"flags"=>"0", "localVersion"=>0, "modified"=>"1970-01-01T07:00:00+07:00", "name"=>"", "numBlocks"=>0, "size"=>0, "version"=>[]}}
 ```
 
-###get_ignores
+### get_ignores
 
 Returns ignores for given folder
 
@@ -267,7 +267,7 @@ Returns ignores for given folder
 => {"ignore"=>[".DS_Store", ".gitignore"], "patterns"=>["(?i)^\\.DS_Store$", "(?i)^.*/\\.DS_Store$", "(?i)^\\.DS_Store/.*$", "(?i)^.*/\\.DS_Store/.*$", "(?i)^\\.gitignore$", "(?i)^.*/\\.gitignore$", "(?i)^\\.gitignore/.*$", "(?i)^.*/\\.gitignore/.*$"]} 
 ```
 
-###new_ignores
+### new_ignores
 
 Sets new ignores for given folder
 
@@ -286,7 +286,7 @@ Sets new ignores for given folder
 => {"ignore"=>["foo"], "patterns"=>["(?i)^foo$", "(?i)^.*/foo$", "(?i)^foo/.*$", "(?i)^.*/foo/.*$"]} 
 ```
 
-###need
+### need
 
 Returns files which are needed for this device.
 
@@ -302,7 +302,7 @@ Returns files which are needed for this device.
 => {"page"=>1, "perpage"=>65536, "progress"=>[], "queued"=>[], "rest"=>[], "total"=>0}  
 ```
 
-###assign_priority
+### assign_priority
 
 Assigns top priority for a given file in a given folder
 
@@ -319,7 +319,7 @@ Assigns top priority for a given file in a given folder
 => {"page"=>1, "perpage"=>65536, "progress"=>[], "queued"=>[], "rest"=>[], "total"=>0}
 ```
 
-###scan
+### scan
 
 Request an immediate rescan of a folder with a subfolder
 
@@ -339,7 +339,7 @@ Request an immediate rescan of a folder with a subfolder
 => {:code=>200, :message=>"Completed successfully"} 
 ```
 
-###get_folder_status
+### get_folder_status
 
 Returns status for a given folder
 
@@ -355,7 +355,7 @@ Returns status for a given folder
 => {"globalBytes"=>3370241, "globalDeleted"=>0, "globalFiles"=>148, "ignorePatterns"=>true, "inSyncBytes"=>3370241, "inSyncFiles"=>148, "invalid"=>"", "localBytes"=>3370241, "localDeleted"=>0, "localFiles"=>148, "needBytes"=>0, "needFiles"=>0, "state"=>"idle", "stateChanged"=>"2015-06-20T10:16:25.336122244+06:00", "version"=>150} 
 ```
 
-###get_device_statistics
+### get_device_statistics
 
 Returns device statistics
 
@@ -364,7 +364,7 @@ Returns device statistics
  => {"7OFMTQD-Q64DFR3-37DAZ4O-LFETQAM-FGIH46F-XGGXHFQ-EYLKOZR-HHLDUQT"=>{"lastSeen"=>"1970-01-01T07:00:00+07:00"}} 
 ```
 
-###get_folder_statistics
+### get_folder_statistics
 
 Returns general statistics about folders.
 
@@ -382,6 +382,6 @@ Returns general statistics about folders.
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-##License
+## License
 All code is licensed under the [MIT License.](https://github.com/retgoat/syncthing-ruby/blob/master/LICENSE.txt)
 
